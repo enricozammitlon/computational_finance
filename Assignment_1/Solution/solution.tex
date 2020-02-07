@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage[a4paper, portrait, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+ \usepackage[utf8]{inputenc}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4
+}
+ 
+ 
+
+\begin{document}
+
+\title{Student Id: 9910821}
+\date{}
+
+\maketitle
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c c c }
+ S & $ d_1 $ & $ d_2 $ & $\prod(S,t)$\\
+ \hline
+3200 & 0.557819 & -2.55584 &  5514.88\\
+3400 & 0.826603 & -2.28705 &  6520.34\\
+3600 & 1.08228 & -2.03138 &  7407.06\\
+3800 & 1.32548 & -1.78817 &  8154.1\\
+4000 & 1.55683 & -1.55683 &  8758.49\\
+4200 & 1.77689 & -1.33677 &  9229.19\\
+4400 & 1.98622 & -1.12744 &  9582.28\\
+4600 & 2.18534 & -0.928318 &  9837.71\\
+4800 & 2.37475 & -0.738909 &  10017.1\\
+5000 & 2.55492 & -0.558738 &  10142.1\\
+\end{tabular}
+\caption{A table showing different values for the financial contract $\prod(S,t)$ for different values of $S$.}
+\label{table:1}
+\end{table}
+
+\lstset{style=mystyle}
+\lstinputlisting[language=C++]{../assignment.cpp}
+
+\end{document}
