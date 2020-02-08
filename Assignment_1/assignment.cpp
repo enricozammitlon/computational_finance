@@ -52,7 +52,7 @@ double normalDistribution(double x)
 int main()
 {
 	//Initial conditions
-	double S = 3000, X = 4000, r = 0.0472, q = 0.0269,
+	double S = 2800, X = 4000, r = 0.0472, q = 0.0269,
 		sigma =  0.2481, T = 1., t = 0.;
 	ofstream output("./Assignment_1/test.csv");
 
