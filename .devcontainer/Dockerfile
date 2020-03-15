@@ -19,12 +19,12 @@ ARG USER_GID=$USER_UID
 # Configure apt and install packages
 RUN apt-get update \
     && apt-get -y install --no-install-recommends apt-utils dialog 2>&1 \
-    # 
+    #
     # Verify git, process tools, lsb-release (useful for CLI installs) installed
     && apt-get -y install git iproute2 procps lsb-release\
     #
     # Install C++ tools
-    && apt-get -y install build-essential cmake cppcheck valgrind texlive-latex-recommended\
+    && apt-get -y install build-essential cmake cppcheck valgrind texlive-latex-extra\
     # Install Python3 tools
     && apt-get -y install python3 python3-pip\
     && pip3 install matplotlib\
