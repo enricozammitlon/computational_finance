@@ -8,10 +8,10 @@
             "name": "g++ build and debug active file",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "program": "${workspaceFolder}/Assignment_4/assignment_4",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/Assignment_4",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
@@ -23,6 +23,7 @@
                 }
             ],
             "preLaunchTask": "g++ build active file",
+            "postDebugTask": "run analysis and create pdf",
             "miDebuggerPath": "/usr/bin/gdb"
         }
     ]

@@ -6,12 +6,20 @@
             "command": "/usr/bin/g++",
             "args": [
                 "-g",
-                "${file}",
+                "assignment_4.cpp",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "assignment_4"
             ],
             "options": {
-                "cwd": "/usr/bin"
+                "cwd": "${workspaceFolder}/Assignment_4/"
+            }
+        },
+        {
+            "type": "shell",
+            "label": "run analysis and create pdf",
+            "command": "python3 assignment_4.py;python3 analytic.py;lualatex Solution/Solution.tex -output-directory=Solution/",
+            "options": {
+                "cwd": "${workspaceFolder}/Assignment_4/"
             }
         }
     ],

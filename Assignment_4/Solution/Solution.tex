@@ -1,0 +1,73 @@
+\documentclass{article}
+\usepackage[a4paper, portrait, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{blindtext}
+\usepackage[export]{adjustbox}
+\usepackage{enumerate}
+\usepackage{amsmath}
+\usepackage[skip=0.5ex]{subcaption}
+\usepackage{caption}
+\usepackage{lipsum}
+\usepackage{tabularx}
+\usepackage{makecell}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\newtheorem{theorem}{Theorem}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4
+}
+
+
+
+\begin{document}
+
+\title{Student Id: 9910821}
+\date{}
+
+\maketitle
+\section*{Introduction}
+This report is a two part study of:
+\begin{enumerate}[I)]
+  \item Pricing a convertible bond contract in  which, \textbf{at expiry} $T$ the  holder  has  the option to  choose  between  receiving the principle $F$ or alternatively receiving $R$ underlying stocks with price $S$
+  \item An extension to the above contract where the holder is able to exercise the decision to convert the bond in stock at \textbf{any time before} the maturity of the contract. This is known as an American embedded option
+\end{enumerate}
+through the use of advanced numerical methods such as Crank-Nicolson with PSOR.
+
+\section*{Task 2.1}
+This task consisted in valuing a portfolio comprising of shorting a call option with strike price $X_1$,
+ longing a call option with strike price $X_2$, longing $2 X_2$ binary cash or nothing call options with strike
+ price $X_2$ and unit payoff and longing a call option with strike price equal to zero with parameters:
+
+
+\clearpage
+\section*{Appendix}
+\lstset{style=mystyle}
+\subsection*{Portfolio Pricing Program Listing}
+\lstinputlisting[language=C++]{assignment_4.cpp}
+\subsection*{Graphing Program Listing}
+\lstinputlisting[language=Python]{analytic.py}
+\lstinputlisting[language=Python]{assignment_4.py}
+\end{document}
