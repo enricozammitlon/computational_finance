@@ -181,42 +181,41 @@ int main()
     outFile3 << S_max << "," << iMax << "," << jMax << "," << S << " , " << crank_nicolson(S, X, F, T, r, sigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sor, gamma) << "\n";
   }
   outFile3.close();
-
-  std::ofstream outFile4("./data/varying_jmax.csv");
-  iMax = 25;
-  for (jMax = 1; jMax <= 100; jMax = incFn(jMax))
+  /*
+  for (int s_Mult = 10; s_Mult <= 50; s_Mult+=1)
   {
-    vector<double> gamma(jMax + 1);
-    double S = X;
-    outFile4 << S_max << "," << iMax << "," << jMax << "," << S << " , " << crank_nicolson(S, X, F, T, r, sigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sor, gamma) << "\n";
-  }
-  outFile4.close();
-
-  std::ofstream outFile5("./data/varying_smax.csv");
-  iMax = 10;
-  tol = 1.e-7;
-  for (int s_Mult = 10; s_Mult <= 100; s_Mult = incFn(s_Mult))
-  {
-    jMax = s_Mult * 5;
     double S = X;
     S_max = s_Mult * X;
-    double result = 0, prevResult = 0;
-    std::cout << s_Mult << std::endl;
-    do
+    string title = "./data/smax_jmax/"+to_string(s_Mult)+"_varying_jmax.csv";
+    std::ofstream outFile4(title);
+    iMax = 25;
+    for (jMax = 1; jMax <= 10*s_Mult; jMax +=1)
     {
-      int sorCount;
-      prevResult = result;
-      jMax += 5;
       vector<double> gamma(jMax + 1);
-      result = crank_nicolson(S, X, F, T, r, sigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sorCount, gamma);
-    } while (trunc(1.e3 * prevResult) != trunc(1.e3 * result) && result != -1);
-    outFile5 << S_max << "," << iMax << "," << jMax << "," << S << " , " << prevResult << "\n";
+      outFile4 << S_max << "," << iMax << "," << jMax << "," << S << " , " << crank_nicolson(S, X, F, T, r, sigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sor, gamma) << "\n";
+    }
+    outFile4.close();
+  }
+  */
+  
+  std::ofstream outFile5("./data/varying_smax.csv");
+  iMax = 25;
+  tol = 1.e-7;
+  for (int s_Mult = 10; s_Mult <= 50; s_Mult+=1)
+  {
+    jMax = s_Mult * 10;
+    double S = X;
+    S_max = s_Mult * X;
+    int sorCount;
+    vector<double> gamma(jMax + 1);
+    double result = crank_nicolson(S, X, F, T, r, sigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sorCount, gamma);
+    outFile5 << S_max << "," << iMax << "," << jMax << "," << S << " , " << result << "\n";
   }
   outFile5.close();
 
-  S_max = 30 * X;
+  S_max = 10 * X;
   std::ofstream outFile6("./data/analytic.csv");
-  iMax = 10, jMax = 150;
+  iMax = 25, jMax = 100;
 
   for (int j = 1; j <= length - 1; j++)
   {
@@ -225,4 +224,5 @@ int main()
     outFile6 << j * S_range / length << " , " << crank_nicolson(j * S_range / length, X, F, T, r, altSigma, R, 0, mu, C, alpha, 1, iMax, jMax, S_max, tol, omega, iterMax, sor, gamma) << "\n";
   }
   outFile6.close();
+  
 }

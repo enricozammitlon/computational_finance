@@ -1,4 +1,4 @@
-This is LuaTeX, Version 0.95.0 (TeX Live 2016/Debian)  (format=lualatex 2020.4.5)  8 APR 2020 15:00
+This is LuaTeX, Version 0.95.0 (TeX Live 2016/Debian)  (format=lualatex 2020.4.8)  9 APR 2020 10:33
  restricted system commands enabled.
 **Solution/Solution.tex -output-directory=Solution/
 (./Solution/Solution.tex
@@ -704,13 +704,13 @@ File: lstlang1.sty 2015/06/04 1.6 listings language file
 [6]) (./assignment_4.py [7] [8] [9]) [10] (./Solution.aux))
 
 Here is how much of LuaTeX's memory you used:
- 15129 strings out of 494577
+ 15115 strings out of 494577
  476952,460012 words of node,token memory allocated
  599 words of node memory still in use:
    5 hlist, 2 vlist, 2 rule, 34 glue, 1 kern, 42 glue_spec, 1 write nodes
-   avail lists: 1:2,2:33,3:62,4:7784,5:7536,6:2095,7:15900,8:6253,9:16267,10:61,
+   avail lists: 1:2,2:32,3:62,4:7784,5:7536,6:2114,7:16203,8:6253,9:16267,10:61,
 11:1201
- 18466 multiletter control sequences out of 65536+600000
+ 18452 multiletter control sequences out of 65536+600000
  50 fonts using 2078831 bytes
  65i,6n,100p,509b,800s stack positions out of 5000i,500n,10000p,200000b,100000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/d
@@ -723,7 +723,7 @@ bx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fo
 nts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb
 ></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/type1
 /public/lm/lmr5.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb>
-Output written on Solution.pdf (10 pages, 212474 bytes).
+Output written on Solution.pdf (10 pages, 216962 bytes).
 
 PDF statistics: 85 PDF objects out of 1000 (max. 8388607)
  61 compressed objects within 1 object stream
