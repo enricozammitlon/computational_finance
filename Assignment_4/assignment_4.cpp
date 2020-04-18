@@ -73,7 +73,7 @@ std::vector<double> thomasSolve(const std::vector<double> &a, const std::vector<
 /* Template code for the Crank Nicolson Finite Difference
  */
 double crank_nicolson(double S0, double X, double F, double T, double r, double sigma,
-                      double R, double kappa, double mu, double C, double alpha, double beta, int iMax, int jMax, int S_max, double tol, double omega, int iterMax, int &sorCount, std::vector<double> &gamma)
+                      double R, double kappa, double mu, double C, double alpha, double beta, int iMax, int jMax, int S_max, double tol, double omega, int iterMax, int &sorCount)
 {
   // declare and initialise local variables (ds,dt)
   double dS = S_max / jMax;
@@ -119,12 +119,7 @@ double crank_nicolson(double S0, double X, double F, double T, double r, double 
     // solve matrix equations with SOR
     sorSolve(a, b, c, d, vNew, iterMax, tol, omega, sorCount);
     //vNew = thomasSolve(a, b, c, d);
-    gamma[0] = 0;
-    for (size_t j = 1; j < jMax; j++)
-    {
-      gamma[j] = (1 / (2 * pow(dS, 2))) * (vNew[j + 1] - 2 * vNew[j] + vNew[j - 1] + vOld[j + 1] - 2 * vOld[j] + vOld[j - 1]);
-    }
-    gamma[jMax] = 0;
+
     if (sorCount == iterMax)
       return -1;
 
@@ -156,10 +151,46 @@ int main()
          mu = 0.0073, X = 56.47, C = 0.106, alpha = 0.01, beta = 1., sigma = 3.73, S_max = 10 * X, tol = 1.e-7, omega = 1.;
   */
   int iterMax = 10000, iMax = 100, jMax = 100;
-  //Create graph of varying  S and optionvalue
+  //Create graph of varying S0 and beta and bond
   int length = 300;
   double S_range = 3 * X;
   int sor;
+  /*
+  std::ofstream outFile7("./data/varying_s_beta.csv");
+
+  for (double beta = 0; beta < 1.3; beta += 0.1)
+  {
+    for (int j = 1; j <= length - 1; j++)
+    {
+      outFile7 << beta << " , " << altSigma << " , " << j * S_range / length << " , " << crank_nicolson(j * S_range / length, X, F, T, r, altSigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sor) << "\n";
+    }
+  }
+  outFile7.close();
+  */
+  /*
+  std::ofstream outFile8("./data/varying_s_sigma.csv");
+  beta = 1;
+  for (double altSigma = 0; altSigma < 3.5; altSigma += 0.1)
+  {
+    for (int j = 1; j <= length - 1; j++)
+    {
+      outFile8 << beta << " , " << altSigma << " , " << j * S_range / length << " , " << crank_nicolson(j * S_range / length, X, F, T, r, altSigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sor) << "\n";
+    }
+  }
+  outFile8.close();
+  */
+  std::ofstream outFile9("./data/varying_s_sigma_beta.csv");
+  for (double altSigma = 0; altSigma < 3.5; altSigma += 0.1)
+  {
+    for (double beta = 0; beta < 1.3; beta += 0.1)
+    {
+      double S0 = X;
+      outFile9 << beta << " , " << altSigma << " , " << S0 << " , " << crank_nicolson(S0, X, F, T, r, altSigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sor) << "\n";
+    }
+  }
+  outFile9.close();
+  /*
+
   std::ofstream outFile1("./data/varying_s_beta_1.csv");
   std::ofstream outFile2("./data/varying_s_beta_0_4.csv");
   for (int j = 1; j <= length - 1; j++)
@@ -181,6 +212,7 @@ int main()
     outFile3 << S_max << "," << iMax << "," << jMax << "," << S << " , " << crank_nicolson(S, X, F, T, r, sigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sor, gamma) << "\n";
   }
   outFile3.close();
+  */
   /*
   for (int s_Mult = 10; s_Mult <= 50; s_Mult+=1)
   {
@@ -197,7 +229,7 @@ int main()
     outFile4.close();
   }
   */
-  
+  /*
   std::ofstream outFile5("./data/varying_smax.csv");
   iMax = 25;
   tol = 1.e-7;
@@ -224,5 +256,5 @@ int main()
     outFile6 << j * S_range / length << " , " << crank_nicolson(j * S_range / length, X, F, T, r, altSigma, R, 0, mu, C, alpha, 1, iMax, jMax, S_max, tol, omega, iterMax, sor, gamma) << "\n";
   }
   outFile6.close();
-  
+  */
 }
