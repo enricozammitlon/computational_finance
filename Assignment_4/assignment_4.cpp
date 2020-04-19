@@ -3,6 +3,8 @@
 #include <cmath>
 #include <vector>
 #include <algorithm>
+#include <chrono>
+
 using namespace std;
 
 /*
@@ -179,6 +181,7 @@ int main()
   }
   outFile8.close();
   */
+  /*
   std::ofstream outFile9("./data/varying_s_sigma_beta.csv");
   for (double altSigma = 0; altSigma < 3.5; altSigma += 0.1)
   {
@@ -189,6 +192,7 @@ int main()
     }
   }
   outFile9.close();
+  */
   /*
 
   std::ofstream outFile1("./data/varying_s_beta_1.csv");
@@ -201,30 +205,40 @@ int main()
   }
   outFile1.close();
   outFile2.close();
-
+  */
+  /*
   std::ofstream outFile3("./data/varying_imax.csv");
-  auto incFn = [](int val) { return val + 1; };
-  jMax = 25;
-  for (iMax = 1; iMax <= 75; iMax = incFn(iMax))
+  jMax = 100;
+  for (iMax = 1; iMax <= 500; iMax += 1)
   {
-    vector<double> gamma(jMax + 1);
     double S = X;
-    outFile3 << S_max << "," << iMax << "," << jMax << "," << S << " , " << crank_nicolson(S, X, F, T, r, sigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sor, gamma) << "\n";
+    auto t1 = std::chrono::high_resolution_clock::now();
+    double result = crank_nicolson(S, X, F, T, r, sigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sor);
+    auto t2 = std::chrono::high_resolution_clock::now();
+    auto time_taken =
+        std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1)
+            .count();
+    outFile3 << S_max << "," << iMax << "," << jMax << "," << S << " , " << std::fixed << result << "," << time_taken << "\n";
   }
   outFile3.close();
   */
   /*
-  for (int s_Mult = 10; s_Mult <= 50; s_Mult+=1)
+  for (int s_Mult = 10; s_Mult <= 10; s_Mult += 1)
   {
     double S = X;
     S_max = s_Mult * X;
-    string title = "./data/smax_jmax/"+to_string(s_Mult)+"_varying_jmax.csv";
+    string title = "./data/smax_jmax/" + to_string(s_Mult) + "_varying_jmax.csv";
     std::ofstream outFile4(title);
-    iMax = 25;
-    for (jMax = 1; jMax <= 10*s_Mult; jMax +=1)
+    iMax = 40;
+    for (jMax = 1; jMax <= 500; jMax += 1)
     {
-      vector<double> gamma(jMax + 1);
-      outFile4 << S_max << "," << iMax << "," << jMax << "," << S << " , " << crank_nicolson(S, X, F, T, r, sigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sor, gamma) << "\n";
+      auto t1 = std::chrono::high_resolution_clock::now();
+      double result = crank_nicolson(S, X, F, T, r, sigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sor);
+      auto t2 = std::chrono::high_resolution_clock::now();
+      auto time_taken =
+          std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1)
+              .count();
+      outFile4 << S_max << "," << iMax << "," << jMax << "," << S << " , " << std::fixed << result << "," << time_taken << "\n";
     }
     outFile4.close();
   }
@@ -233,18 +247,23 @@ int main()
   std::ofstream outFile5("./data/varying_smax.csv");
   iMax = 25;
   tol = 1.e-7;
-  for (int s_Mult = 10; s_Mult <= 50; s_Mult+=1)
+  for (int s_Mult = 10; s_Mult <= 50; s_Mult += 1)
   {
     jMax = s_Mult * 10;
     double S = X;
     S_max = s_Mult * X;
     int sorCount;
-    vector<double> gamma(jMax + 1);
-    double result = crank_nicolson(S, X, F, T, r, sigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sorCount, gamma);
-    outFile5 << S_max << "," << iMax << "," << jMax << "," << S << " , " << result << "\n";
+    auto t1 = std::chrono::high_resolution_clock::now();
+    double result = crank_nicolson(S, X, F, T, r, sigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sorCount);
+    auto t2 = std::chrono::high_resolution_clock::now();
+    auto time_taken =
+        std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1)
+            .count();
+    outFile5 << S_max << "," << iMax << "," << jMax << "," << S << " , " << std::fixed << result << "," << time_taken << "\n";
   }
   outFile5.close();
-
+  */
+  /*
   S_max = 10 * X;
   std::ofstream outFile6("./data/analytic.csv");
   iMax = 25, jMax = 100;
@@ -257,4 +276,8 @@ int main()
   }
   outFile6.close();
   */
+  S_max = 10 * X;
+  iMax = 50, jMax = 400;
+  double S0 = X;
+  std::cout << std::fixed << crank_nicolson(S0, X, F, T, r, sigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sor);
 }

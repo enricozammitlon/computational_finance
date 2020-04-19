@@ -1,8 +1,18 @@
 \begin{thebibliography}{1}
 
+\bibitem{thierfelder2015trending}
+C.~Thierfelder, ``The trending ornstein-uhlenbeck process and its applications
+  in mathematical finance,'' {\em Mathematical Finance}, 2015.
+
 \bibitem{cev}
 V.~Linetsky and R.~Mendoza, {\em Constant Elasticity of Variance (CEV)
   Diffusion Model}.
 \newblock American Cancer Society, 2010.
+
+\bibitem{chan}
+N.~H. Chan and C.~T. Ng, {\em Fractional constant elasticity of variance
+  model}, vol.~Volume 52 of {\em Lecture Notes--Monograph Series},
+  pp.~149--164.
+\newblock Beachwood, Ohio, USA: Institute of Mathematical Statistics, 2006.
 
 \end{thebibliography}

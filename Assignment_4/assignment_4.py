@@ -156,6 +156,7 @@ ax = fig.add_subplot(111, projection='3d')
 ax.scatter(currentData['S'],currentData['V'],currentData['beta'])
 plt.savefig('images/european_varying_s_varying_beta.png',bbox_inches='tight', pad_inches=0.2)
 '''
+'''
 currentData={'S':[],'V':[],'beta':[],'sigma':[]}
 with open('data/varying_s_sigma_beta.csv', newline='\n') as csvfile:
     reader = csv.DictReader(csvfile,fieldnames=['beta','sigma','S','V'],quoting=csv.QUOTE_NONNUMERIC)
@@ -167,6 +168,7 @@ with open('data/varying_s_sigma_beta.csv', newline='\n') as csvfile:
         currentData['beta'].append(row['beta'])
         currentData['sigma'].append(row['sigma'])
 '''
+'''
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 ax.scatter(currentData['sigma'],currentData['beta'],currentData['V'])
@@ -176,7 +178,7 @@ ax.set_zlabel(r'$V(S,t=T)$')
 plt.show()
 plt.savefig('images/european_varying_s_varying_sigma_varying_beta.png',bbox_inches='tight', pad_inches=0.2)
 '''
-
+'''
 fig = plt.figure()
 ax2 = fig.add_subplot(111)
 ax2.hist2d(currentData['sigma'],currentData['beta'],bins=100,weights=currentData['V'])
@@ -185,3 +187,40 @@ ax2.set_ylabel(r'$\beta$')
 #ax2.set_zlabel(r'$V(S,t=T)$')
 plt.show()
 plt.savefig('images/hist2d_european_varying_s_varying_sigma_varying_beta.png',bbox_inches='tight', pad_inches=0.2)
+'''
+plt.figure()
+plt.grid()
+plt.xlabel(r'maximum iterations')
+plt.ylabel(r'$time/ms$')
+
+currentData={'x':[],'y':[],'iMax':0,'sMax':0,'time':[]}
+with open('data/smax_jmax/10_varying_jmax.csv', newline='\n') as csvfile:
+    reader = csv.DictReader(csvfile,fieldnames=['sMax','iMax','jMax','S','V','time'],quoting=csv.QUOTE_NONNUMERIC)
+    for row in reader:
+        currentData['x'].append(row['jMax'])
+        currentData['y'].append(row['V'])
+        currentData['iMax']=row['iMax']
+        currentData['sMax']=int(row['sMax']/X)
+        currentData['time'].append(row['time'])
+
+
+plt.plot(currentData['x'],currentData['time'],label=r'Varying $j_{max}$ const. $i_{max}=40$',linewidth=2)
+
+
+
+variationData=[]
+currentData={'x':[],'y':[],'jMax':0,'sMax':0,'time':[]}
+
+with open('data/varying_imax.csv', newline='\n') as csvfile:
+    reader = csv.DictReader(csvfile,fieldnames=['sMax','iMax','jMax','S','V','time'],quoting=csv.QUOTE_NONNUMERIC)
+    for row in reader:
+        currentData['x'].append(row['iMax'])
+        currentData['y'].append(row['V'])
+        currentData['jMax']=row['jMax']
+        currentData['sMax']=int(row['sMax']/X)
+        currentData['time'].append(row['time'])
+
+plt.plot(currentData['x'],currentData['time'],label=r'Varying $i_{max}$ const. $j_{max}=100$',linewidth=2)
+
+plt.legend(loc='upper center',fancybox=False, framealpha=0.0)
+plt.savefig('images/european_time.png',bbox_inches='tight', pad_inches=0.2)

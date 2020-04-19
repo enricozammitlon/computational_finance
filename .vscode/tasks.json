@@ -17,7 +17,7 @@
         {
             "type": "shell",
             "label": "run analysis and create pdf",
-            "command": "python3 assignment_4.py;python3 analytic.py;lualatex Solution/Solution.tex -output-directory=Solution/",
+            "command": "python3 assignment_4.py;python3 analytic.py;cd Solution;pdflatex Solution.tex",
             "options": {
                 "cwd": "${workspaceFolder}/Assignment_4/"
             }

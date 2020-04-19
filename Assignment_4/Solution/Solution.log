@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2020.4.8)  18 APR 2020 13:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2020.4.8)  19 APR 2020 15:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -638,7 +638,11 @@ LaTeX Info: Redefining \nocite on input line 332.
 Package: cite 2015/02/27  v 5.5
 )
 \c@theorem=\count138
- (./Solution.aux)
+ (./Solution.aux
+
+LaTeX Warning: Label `fig:varying_smax' multiply defined.
+
+)
 \openout1 = `Solution.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
@@ -757,27 +761,100 @@ LaTeX Warning: No \author given.
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-<../images/european_varying_s.png, id=19, 429.2838pt x 328.8285pt>
+<../images/european_varying_s.png, id=20, 429.2838pt x 328.8285pt>
 File: ../images/european_varying_s.png Graphic file (type png)
 
 <use ../images/european_varying_s.png>
 Package pdftex.def Info: ../images/european_varying_s.png used on input line 20
-8.
-(pdftex.def)             Requested size: 317.07614pt x 242.8777pt.
+9.
+(pdftex.def)             Requested size: 294.42636pt x 225.52715pt.
 
-<../images/3d_european_varying_s_varying_sigma_varying_beta.png, id=21, 462.528
+<../images/3d_european_varying_s_varying_sigma_varying_beta.png, id=22, 462.528
 pt x 346.896pt>
 File: ../images/3d_european_varying_s_varying_sigma_varying_beta.png Graphic fi
 le (type png)
 
 <use ../images/3d_european_varying_s_varying_sigma_varying_beta.png>
 Package pdftex.def Info: ../images/3d_european_varying_s_varying_sigma_varying_
-beta.png used on input line 219.
-(pdftex.def)             Requested size: 317.07614pt x 237.81816pt.
+beta.png used on input line 225.
+(pdftex.def)             Requested size: 294.42636pt x 220.83229pt.
  [3
 
  <../images/european_varying_s.png> <../images/3d_european_varying_s_varying_si
-gma_varying_beta.png>] (./Solution.bbl) [4
+gma_varying_beta.png>]
+<../images/european_varying_imax.png, id=28, 439.4016pt x 326.6604pt>
+File: ../images/european_varying_imax.png Graphic file (type png)
+
+<use ../images/european_varying_imax.png>
+Package pdftex.def Info: ../images/european_varying_imax.png used on input line
+ 240.
+(pdftex.def)             Requested size: 226.48395pt x 168.37404pt.
+
+<../images/smax_jmax/10_european_varying_jmax.png, id=29, 432.1746pt x 329.5512
+pt>
+File: ../images/smax_jmax/10_european_varying_jmax.png Graphic file (type png)
+ <use ../images/smax_jmax/10_european_varying_jmax.png>
+Package pdftex.def Info: ../images/smax_jmax/10_european_varying_jmax.png used 
+on input line 253.
+(pdftex.def)             Requested size: 249.13371pt x 189.97319pt.
+
+<../images/smax_jmax/65_european_varying_jmax.png, id=30, 432.1746pt x 329.5512
+pt>
+File: ../images/smax_jmax/65_european_varying_jmax.png Graphic file (type png)
+ <use ../images/smax_jmax/65_european_varying_jmax.png>
+Package pdftex.def Info: ../images/smax_jmax/65_european_varying_jmax.png used 
+on input line 266.
+(pdftex.def)             Requested size: 249.13371pt x 189.97319pt.
+
+
+Package caption Warning: \label without proper reference on input line 257.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `fig:varying_jmax_10' on page 4 undefined on input lin
+e 267.
+
+
+Package caption Warning: \label without proper reference on input line 257.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `fig:varying_jmax_10' on page 4 undefined on input lin
+e 267.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 238--286
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 238--286
+
+ []
+
+[4 <../images/european_varying_imax.png> <../images/smax_jmax/10_european_varyi
+ng_jmax.png>]
+<../images/european_varying_smax.png, id=39, 472.6458pt x 354.123pt>
+File: ../images/european_varying_smax.png Graphic file (type png)
+
+<use ../images/european_varying_smax.png>
+Package pdftex.def Info: ../images/european_varying_smax.png used on input line
+ 290.
+(pdftex.def)             Requested size: 294.42636pt x 220.60225pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 287--298
+
+ []
+
+[5 <../images/smax_jmax/65_european_varying_jmax.png> <../images/european_varyi
+ng_smax.png>] <../images/european_time.png, id=46, 437.2335pt x 329.5512pt>
+File: ../images/european_time.png Graphic file (type png)
+
+<use ../images/european_time.png>
+Package pdftex.def Info: ../images/european_time.png used on input line 304.
+(pdftex.def)             Requested size: 294.42636pt x 221.9195pt.
+ [6 <../images/european_time.png>]
+(./Solution.bbl) [7
 
 ]
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
@@ -796,45 +873,56 @@ File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10> not available
 (Font)              Font shape `OML/cmm/m/it' tried instead on input line 1.
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 8.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 10.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 8.
- [5
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 10.
+ [8
 
-] [6] [7] [8]
-[9]) (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+] [9] [10] [11]
+[12]) (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2015/06/04 1.6 listings language file
 )
-(../analytic.py [10]) (../assignment_4.py [11] [12] [13] [14]) [15]
-(./Solution.aux) ) 
+(../analytic.py [13]) (../assignment_4.py [14] [15] [16] [17] [18]) [19]
+(./Solution.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 8184 strings out of 494945
- 113424 string characters out of 6181033
- 582800 words of memory out of 5000000
- 11318 multiletter control sequences out of 15000+600000
- 9369 words of font info for 34 fonts, out of 8000000 for 9000
+ 8234 strings out of 494945
+ 114807 string characters out of 6181033
+ 592612 words of memory out of 5000000
+ 11357 multiletter control sequences out of 15000+600000
+ 10814 words of font info for 39 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 59i,9n,100p,356b,1803s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx1
-2.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/font
-s/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmti10.pfb>
-Output written on Solution.pdf (15 pages, 323096 bytes).
+ 59i,11n,100p,356b,1814s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on Solution.pdf (19 pages, 498854 bytes).
 PDF statistics:
- 106 PDF objects out of 1000 (max. 8388607)
- 72 compressed objects within 1 object stream
+ 149 PDF objects out of 1000 (max. 8388607)
+ 96 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 36 words of extra memory for PDF output out of 10000 (max. 10000000)
 
