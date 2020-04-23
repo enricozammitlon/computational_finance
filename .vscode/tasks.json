@@ -6,9 +6,9 @@
             "command": "/usr/bin/g++",
             "args": [
                 "-g",
-                "assignment_4.cpp",
+                "american_assignment_4.cpp",
                 "-o",
-                "assignment_4"
+                "american_assignment_4"
             ],
             "options": {
                 "cwd": "${workspaceFolder}/Assignment_4/"

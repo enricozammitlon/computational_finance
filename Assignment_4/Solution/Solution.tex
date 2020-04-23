@@ -58,7 +58,7 @@ This report is a two part study of:
 \end{enumerate}
 through the use of advanced numerical methods such as Crank-Nicolson with PSOR.
 
-\section{European Option Convertible Bond}
+\section{European Type Option Convertible Bond}
 The PDE describing such a convertible bond contract is given by
 \begin{equation}
   \frac{\partial V}{\partial t} + \frac{1}{2}\sigma^{2}S^{2\beta}\frac{\partial^2 V}{\partial S^2}+\kappa(\theta (t) -S)\frac{\partial V}{\partial S} -rV + Ce^{-\alpha t} =0
@@ -202,12 +202,12 @@ price $S_0$ for two cases:
   \item ($\beta=1$, $\sigma=0.416$) with all other paramaters as previously defined
   \item ($\beta=0.486$, $\sigma=3.03$) with all other paramaters as previously defined
 \end{enumerate}
-The Crank-Nicolson method with the numerical scheme as calculated previously, combined with a SOR iterative method of solving the matrix equation, was implemented in code.
+\par The Crank-Nicolson method with the numerical scheme as calculated previously, combined with a SOR iterative method of solving the matrix equation, was implemented in code.
 This produced the plots seen in Figure \ref{fig:varying_s}.
 \clearpage
 \begin{figure}[!th]
 \includegraphics[width=0.65\textwidth,center]{../images/european_varying_s.png}
-\caption{Value of the convertible bond $V(S,t=T)$ against inital underlying asset price at time $S_0$ for two combinations of $\beta$ and $\sigma$.}
+\caption{Value of the convertible bond $V(S,t=0)$ against inital underlying asset price at time $S_0$ for two combinations of $\beta$ and $\sigma$.}
 \label{fig:varying_s}
 \end{figure}
 The two configurations were therefore found to have the same effect and produce plots for the price of the bond which were very close.
@@ -272,8 +272,7 @@ Here, it is clear that increasing $i_{max}$ rapidly converges towards a single v
 \label{fig:varying_jmax}
 \end{figure}
 \\
-\\
-When it came to varying $j_{max}$ which is the number of steps in $S$ per timestep, it was noticed
+\par When it came to varying $j_{max}$ which is the number of steps in $S$ per timestep, it was noticed
 that since the stepsize in $S$ is calculated by dividing $S_{max}$ by the number of steps then these had to go
 hand in hand when varying one of them.
 Figure \ref{fig:varying_jmax} illustrates this very clearly.
@@ -301,12 +300,66 @@ As can be infered from Figure \ref{fig:varying_smax} $i_max$ follows a linear ti
 This is because of the fact that a single loop from time $t=T$ to $t=0$ is done but a further loop of $j_{max}$ length is done per time step.
 Since the error of Crank-Nicolson is given by $\mathcal{O}({\Delta S}^2,{\Delta t}^2)$ both quantities are important and are dependent directly on $i_{max}$ and $j_{max}$ however $j_{max}$ has the highest influence on the value converging to the analytic value so a compromise must be made.
 \begin{figure}[!h]
-\includegraphics[width=0.65\textwidth,center]{../images/european_time.png}
+\includegraphics[width=0.6\textwidth,center]{../images/european_time.png}
 \caption{Variation of the time required to calculate the convertible bond price as $j_{max}$ and $i_{max}$ are varied.}
 \label{fig:varying_smax}
 \end{figure}
 \\
 The final value for $\sigma=3.03$ and $\beta=0.486$ was calculated to be $V(S=X,t=0)=112.163$ with $S_{max}=10X$, $j_{max}=400$, $i_{max}=50$.
+\section{American Type Option Convertible Bond with Embedded Option}
+For this section the numerical method used was Crank-Nicolson with PSOR.
+The extension to the european option type convertible bond detailed in Section 1 is to change it to an American type option.
+By this we mean that the holder has the option to convert the bond in stock at any time before the maturity of the contract.
+To ensure this, the inequality
+\begin{equation}
+  V \geq RS
+  \label{eq:inequality}
+\end{equation}
+must hold for all $t<T$.
+This means the $V_{american}>V_{european}$.
+A last addition is to embed a put option in this contract which means the holder has the option to sell the bond back to the issuer over some time period such that
+\begin{equation}
+  V(S,t) \geq P_p \hspace{15pt} \text{for} \hspace{15pt} t \leq t_0
+  \label{eq:inequality_2}
+\end{equation}
+must hold.
+\\
+\par Figure \ref{fig:american_varying_s} shows the results of adding these conditions in the code.
+The limit for large $S$ is observed as expected to tend to $RS$ and compared to Figure \ref{fig:varying_s} the value of the option is higher.
+This is due to the fact that the effective increase in power given to the holder increases the price.
+Furthermore, adding the put option increases further the price since again this gives more power to the holder.
+This put option might be a sort of safety net in case the value of the stock decreases too much and as with most financial contracts, an decrease in risk must increase the price.
+The bond floor is thus observed to be raised when compared to the no-option case.
+\\
+\par Finally,the the arrows are pointing to two decision points at which the price of the contract becomes more than $P_p$ thereafter and becomes more than $RS_0$ thereafter.
+These are important points since the holder would only ever buy the contract for values of $S_0$ between those two points otherwise they would just buy the contract to sell it again or would buy the underlying equity.
+\begin{figure}[!th]
+\includegraphics[width=0.65\textwidth,center]{../images/american_varying_s.png}
+\caption{Value of the american type option convertible bond $V(S,t=0)$ against inital underlying asset price $S_0$ with and without the embedded put option.}
+\label{fig:american_varying_s}
+\end{figure}
+\par The sensitivity to the mean reversion rate \cite{CHOUDHRY2001873} $\kappa$ was studied.
+Refering back to Equation \ref{eq:process}, this is the rate at which the stock will revert back to the long term mean price described by $\theta(t)$.
+As can be seen from Figure \ref{fig:american_varying_s_varying_k} an increase in $\kappa$ decreases the value of the bond in the at-the-money region of the underlying stock.
+This is expected since less fluctuations in the stock price movements make it less attractive to buy this contract due to the probabilities of the stock price changing drastically in the future being lower thus the convertibility of the bond being unused.
+\begin{figure}[!bh]
+\begin{minipage}{.5\textwidth}
+  \centering
+  \begin{subfigure}{\textwidth}
+      \includegraphics[width=\textwidth,center]{../images/complete_american_varying_s_varying_k.png}
+  \end{subfigure}
+\end{minipage}
+\begin{minipage}{.5\textwidth}
+  \centering
+  \begin{subfigure}{\textwidth}
+      \includegraphics[width=\textwidth,center]{../images/american_varying_s_varying_k.png}
+  \end{subfigure}
+\end{minipage}
+\caption{Value of the american type option convertible bond $V(S,t=0)$ with embedded put option for different values of parameter $\kappa$. Right side plot is a zoomed version of the left side plot.}
+\label{fig:american_varying_s_varying_k}
+\end{figure}
+\par Moving on, it was requested to obtain the most accurate value possible in one second of processing.
+The first thing to think about is discontinuities.
 \clearpage
 \bibliography{references}
 \bibliographystyle{ieeetr}

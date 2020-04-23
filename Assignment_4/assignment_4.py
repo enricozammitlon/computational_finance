@@ -106,7 +106,7 @@ for smax in range(10,101):
     plt.savefig('images/smax_jmax/'+str(smax)+'_european_varying_jmax.png',bbox_inches='tight', pad_inches=0.2)
     plt.close()
 '''
-'''
+
 allData=[]
 with open('data/varying_s_beta_1.csv', newline='\n') as csvfile:
     reader = csv.DictReader(csvfile,fieldnames=['S','V'],quoting=csv.QUOTE_NONNUMERIC)
@@ -129,16 +129,16 @@ plt.grid()
 plt.plot(allData[0]['S'],allData[0]['V'],label=r'$\beta=1,\sigma=0.416$',linewidth=2)
 plt.plot(allData[1]['S'],allData[1]['V'],label=r'$\beta=0.486,\sigma=3.03$',linewidth=2)
 #plt.plot(allData[0]['S'],np.ones(len(allData[0]['S'])) * F,label=r'Principal Only',linewidth=2)
-equityOnly_1 = [ R*euro_vanilla_call(s, X, T, r, sigma) for s in allData[0]['S'] ]
-equityOnly_2 = [ R*euro_vanilla_call(s, X, T, r, 3.03) for s in allData[0]['S'] ]
+#equityOnly_1 = [ R*euro_vanilla_call(s, X, T, r, sigma) for s in allData[0]['S'] ]
+#equityOnly_2 = [ R*euro_vanilla_call(s, X, T, r, 3.03) for s in allData[0]['S'] ]
 #plt.plot(allData[0]['S'],equityOnly_1,label=r'Equity Only $\sigma=0.416$',linewidth=2)
 #plt.plot(allData[0]['S'],equityOnly_2,label=r'Equity Only $\sigma=3.03$',linewidth=2)
 
 plt.xlabel(r'$S_0$')
-plt.ylabel(r'$V(S,t=T)$')
+plt.ylabel(r'$V(S,t=0)$')
 plt.legend(loc='upper center',fancybox=False, framealpha=0.0)
 plt.savefig('images/european_varying_s.png',bbox_inches='tight', pad_inches=0.2)
-
+'''
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -188,6 +188,7 @@ ax2.set_ylabel(r'$\beta$')
 plt.show()
 plt.savefig('images/hist2d_european_varying_s_varying_sigma_varying_beta.png',bbox_inches='tight', pad_inches=0.2)
 '''
+'''
 plt.figure()
 plt.grid()
 plt.xlabel(r'maximum iterations')
@@ -224,3 +225,4 @@ plt.plot(currentData['x'],currentData['time'],label=r'Varying $i_{max}$ const. $
 
 plt.legend(loc='upper center',fancybox=False, framealpha=0.0)
 plt.savefig('images/european_time.png',bbox_inches='tight', pad_inches=0.2)
+'''
