@@ -4,7 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include <chrono>
-
+#include <iomanip>
 using namespace std;
 
 /*
@@ -54,6 +54,41 @@ void sorSolve(const std::vector<double> &a, const std::vector<double> &b, const 
     if (error < tol)
       break;
   }
+}
+double lagrangeInterpolation(const vector<double> &y, const vector<double> &x, double x0, unsigned int n)
+{
+  if (x.size() < n)
+    return lagrangeInterpolation(y, x, x0, x.size());
+  if (n == 0)
+    throw;
+  int nHalf = n / 2;
+  int jStar;
+  double dx = x[1] - x[0];
+  if (n % 2 == 0)
+    jStar = int((x0 - x[0]) / dx) - (nHalf - 1);
+  else
+    jStar = int((x0 - x[0]) / dx + 0.5) - (nHalf);
+  jStar = std::max(0, jStar);
+  jStar = std::min(int(x.size() - n), jStar);
+  if (n == 1)
+    return y[jStar];
+  double temp = 0.;
+  for (unsigned int i = jStar; i < jStar + n; i++)
+  {
+    double int_temp;
+    int_temp = y[i];
+    for (unsigned int j = jStar; j < jStar + n; j++)
+    {
+      if (j == i)
+      {
+        continue;
+      }
+      int_temp *= (x0 - x[j]) / (x[i] - x[j]);
+    }
+    temp += int_temp;
+  }
+  // end of interpolate
+  return temp;
 }
 std::vector<double> thomasSolve(const std::vector<double> &a, const std::vector<double> &b_, const std::vector<double> &c, std::vector<double> &d)
 {
@@ -132,13 +167,14 @@ double crank_nicolson(double S0, double X, double F, double T, double r, double 
 
   // output the estimated option price
   double optionValue;
-
+  /*
   int jStar = S0 / dS;
   double sum = 0.;
   sum += (S0 - S[jStar]) / (dS)*vNew[jStar + 1];
   sum += (S[jStar + 1] - S0) / (dS)*vNew[jStar];
   optionValue = sum;
-
+  */
+  optionValue = lagrangeInterpolation(vNew, S, S0, 4);
   return optionValue;
 }
 
@@ -152,7 +188,7 @@ int main()
   double T = 3., F = 56., R = 1., r = 0.0038, kappa = 0.083333333, altSigma = 0.369,
          mu = 0.0073, X = 56.47, C = 0.106, alpha = 0.01, beta = 1., sigma = 3.73, S_max = 10 * X, tol = 1.e-7, omega = 1.;
   */
-  int iterMax = 10000, iMax = 100, jMax = 100;
+  int iterMax = 100000, iMax = 100, jMax = 100;
   //Create graph of varying S0 and beta and bond
   int length = 300;
   double S_range = 3 * X;
@@ -264,6 +300,31 @@ int main()
   outFile5.close();
   */
   /*
+  iMax = 25;
+    tol = 1.e-8;
+    double oldResult = 0;
+    double oldDiff = 0;
+    for (int N = 100; N <= 1000; N *= 1.2)
+    {
+      jMax = N;
+      iMax = N;
+      double S = X;
+      double S_max = N * X / 20;
+      int sorCount;
+      auto t1 = std::chrono::high_resolution_clock::now();
+      double result = crank_nicolson(S, X, F, T, r, sigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sorCount);
+      double diff = result - oldResult;
+      auto t2 = std::chrono::high_resolution_clock::now();
+      auto time_taken =
+          std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1)
+              .count();
+      cout << S_max << "," << iMax << "," << jMax << "," << S << " , " << setprecision(8) << result << "," << time_taken << "," << setprecision(3) << oldDiff / diff << "\n";
+      oldDiff = diff;
+      oldResult = result;
+    }
+  */
+
+  /*
   S_max = 10 * X;
   std::ofstream outFile6("./data/analytic.csv");
   iMax = 25, jMax = 100;
@@ -279,5 +340,5 @@ int main()
   S_max = 10 * X;
   iMax = 50, jMax = 400;
   double S0 = X;
-  std::cout << std::fixed << crank_nicolson(S0, X, F, T, r, sigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sor);
+  std::cout << setprecision(8) << crank_nicolson(S0, X, F, T, r, sigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sor);
 }

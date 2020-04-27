@@ -20,4 +20,13 @@ M.~Choudhry, ``51 - interest-rate models i,'' in {\em The Bond and Money
   Markets}, Securities Institution Professional Reference Series, pp.~873 --
   887, Oxford: Butterworth-Heinemann, 2001.
 
+\bibitem{forsyth2002quadratic}
+P.~A. Forsyth and K.~R. Vetzal, ``Quadratic convergence for valuing american
+  options using a penalty method,'' {\em SIAM Journal on Scientific Computing},
+  vol.~23, no.~6, pp.~2095--2122, 2002.
+
+\bibitem{li2005pricing}
+L.~X. Li, {\em Pricing Convertible Bonds using Partial Differential Equations}.
+\newblock University of Toronto, 2005.
+
 \end{thebibliography}

@@ -252,9 +252,8 @@ Here, it is clear that increasing $i_{max}$ rapidly converges towards a single v
   \begin{subfigure}{\textwidth}
       \includegraphics[width=\linewidth]{../images/smax_jmax/10_european_varying_jmax.png}
       \subcaption{Stability and convergence can be obverved after $j_{max}=40$}
-
-  \end{subfigure}
   \label{fig:varying_jmax_10}
+  \end{subfigure}
 \end{minipage}
 \end{figure}
 \medskip
@@ -307,7 +306,7 @@ Since the error of Crank-Nicolson is given by $\mathcal{O}({\Delta S}^2,{\Delta 
 \\
 The final value for $\sigma=3.03$ and $\beta=0.486$ was calculated to be $V(S=X,t=0)=112.163$ with $S_{max}=10X$, $j_{max}=400$, $i_{max}=50$.
 \section{American Type Option Convertible Bond with Embedded Option}
-For this section the numerical method used was Crank-Nicolson with PSOR.
+For this section the numerical method used was Crank-Nicolson Method with Penalty method and Thomas method for the matrix equation solver.
 The extension to the european option type convertible bond detailed in Section 1 is to change it to an American type option.
 By this we mean that the holder has the option to convert the bond in stock at any time before the maturity of the contract.
 To ensure this, the inequality
@@ -328,10 +327,10 @@ must hold.
 The limit for large $S$ is observed as expected to tend to $RS$ and compared to Figure \ref{fig:varying_s} the value of the option is higher.
 This is due to the fact that the effective increase in power given to the holder increases the price.
 Furthermore, adding the put option increases further the price since again this gives more power to the holder.
-This put option might be a sort of safety net in case the value of the stock decreases too much and as with most financial contracts, an decrease in risk must increase the price.
+This put option might be a sort of safety net in case the value of the stock decreases too much and as with most financial contracts, a decrease in risk must increase the price.
 The bond floor is thus observed to be raised when compared to the no-option case.
 \\
-\par Finally,the the arrows are pointing to two decision points at which the price of the contract becomes more than $P_p$ thereafter and becomes more than $RS_0$ thereafter.
+\par Finally, the arrows are pointing to two decision points at which the price of the contract becomes more than $P_p$ thereafter and becomes more than $RS_0$ thereafter, respectively.
 These are important points since the holder would only ever buy the contract for values of $S_0$ between those two points otherwise they would just buy the contract to sell it again or would buy the underlying equity.
 \begin{figure}[!th]
 \includegraphics[width=0.65\textwidth,center]{../images/american_varying_s.png}
@@ -358,8 +357,53 @@ This is expected since less fluctuations in the stock price movements make it le
 \caption{Value of the american type option convertible bond $V(S,t=0)$ with embedded put option for different values of parameter $\kappa$. Right side plot is a zoomed version of the left side plot.}
 \label{fig:american_varying_s_varying_k}
 \end{figure}
-\par Moving on, it was requested to obtain the most accurate value possible in one second of processing.
-The first thing to think about is discontinuities.
+\par Lastly, it was requested to obtain the most accurate value possible in one second of processing.
+Referring to accuracy first, the important thing to eliminate is any source of error.
+There are errors on the boundary (finite-element) and errors in discontinuities of the domain.
+Since there is a discontinuity at time $t_0$ one must change the timestep used before and now split the domain effectively in two.
+The timestep was chosen such that
+\begin{equation}
+  \Delta t = \frac{T-t_0}{i_{max}f} \hspace{15pt} \text{for} \hspace{15pt} t_0 < t \leq T
+  \label{eq:timestep1}
+\end{equation}
+\begin{equation}
+  \Delta t = \frac{t_0}{i_{max}(1-f)} \hspace{15pt} \text{for} \hspace{15pt} 0 < t \leq t_0
+  \label{eq:timestep2}
+\end{equation}
+where $f=\frac{T-t_0}{T}$.
+A better timestepping system would have been Rannacher smoothing \cite{forsyth2002quadratic} however this was beyond the scope of the analysis and as such
+literature was used to check that the expected convergence ratios were in the right ranges.
+The results, comparing the method PSOR to the penalty method are detailed in Table \ref{table:american_comparison}.
+\begin{table}[!h]
+\centering
+\begin{tabular}{c|c c c c|c c c c|}
+ &\multicolumn{4}{c}{Penalty}&\multicolumn{4}{c}{PSOR} \\
+\cline{2-5}
+\cline{6-9}
+\makecell{$N$} & $V(X,0)$ & Iters & Diff.Ratio & Time(ms) & $V(X,0)$ & Iters & Diff.Ratio & Time(ms)\\
+\hline
+100 & 114.5230426  & 126 &   &  11 & 114.5230426 & 1635 &  & 18 \\
+200 & 114.4983047  & 225 &   &  34 & 114.4983048 & 2211 &  & 38 \\
+400 & 114.4814288  & 427 & 1.47 &  97 & 114.4814289 & 3208 & 1.47& 123 \\
+800 & 114.4729397  & 827 & 1.99 &  379 & 114.4729397 & 4806 & 1.99& 440 \\
+1600 & 114.4702297  & 1627 & 3.13 &  1455 & 114.4702297 & 8005 & 3.13& 1807 \\
+3200 & 114.4688601  & 3227 & 1.98 &  6685 & 114.4688602 & 12804 & 1.98& 6098 \\
+6400 & 114.4681719  & 8838.6 & 1.99 &  25486 & 114.4681722 & 19249 & 1.99& 23284 \\
+\hline
+\end{tabular}
+\caption{Table comparing convergence results and efficiencies of PSOR and Penalty methods with
+a Crank-Nicolson numerical scheme. Here, $j_{max}=i_{max}=N$ and $S_{max}=N X/20$}
+\label{table:american_comparison}
+\end{table}
+\\
+\par The results show the convergence rate is nowhere near square with timestep as it should be
+for a crank nicolson scheme but rather linear.
+This is may be due to the increased complexity the convertibility in the whole life of the
+bond brings with it.
+Because of the smoothing method taken combined with other errors such as interpolation errors
+the rate is less than optimal however it is within expected ranges \cite{li2005pricing}.
+Finally, using the information from Table \ref{table:american_comparison} the most accurate value in the given time was found to be:
+$V(X,t_0=0)=114.472554$ in $965$ms with $j_{max}=i_{max}=1300$ and $s_{max}=65X$.
 \clearpage
 \bibliography{references}
 \bibliographystyle{ieeetr}
