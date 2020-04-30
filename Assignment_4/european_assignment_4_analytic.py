@@ -11,16 +11,7 @@ F = 95.
 R = 2.
 sigma = 0.416
 K = 47.66
-'''
-T=3
-C=0.106
-alpha=0.01
-r=0.0038
-R=1
-F=56
-sigma = 0.369
-K=56.47
-'''
+
 #Calulate value of coupon
 #Through integrating Cexp(-(alpha+r)t)dt from 0 to T
 COUPON = C/(alpha+r) * (1- np.exp((-(alpha+r)*T)))

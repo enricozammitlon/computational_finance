@@ -39,9 +39,7 @@ for i in allData[0]['V']:
     break
   lessRS+=1
 plt.annotate(r'$V(S_0=%.2f,t=0)=RS_0$'%(parity[lessRS]), xy=(parity[lessRS],allData[0]['V'][lessRS]), xytext=(65, 100),arrowprops=dict(arrowstyle="->"))
-#plt.plot(parity,np.ones(len(parity))*100.,label=r'$P_p$',linewidth=2)
 plt.plot(allData[1]['S'][:len(parity)],equity[:len(parity)],label=r'Max(F,R$S_0$)',linewidth=1)
-#plt.plot(allData[1]['S'],parity,label=r'Parity',linewidth=1,linestyle='--')
 plt.xlabel(r'$S_0$')
 plt.ylabel(r'$V(S,t=0)$')
 plt.legend(loc='upper center',fancybox=False, framealpha=0.0)

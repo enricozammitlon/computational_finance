@@ -8,57 +8,6 @@
 
 using namespace std;
 
-/*
- * ON INPUT:
- * a, b and c -- are the diagonals of the matrix
- * rhs        -- is the right hand side
- * x          -- is the initial guess
- * iterMax    -- is maximum iterations
- * tol        -- is the tolerance level
- * omega      -- is the relaxation parameter
- * sor        -- not used
- * ON OUTPUT:
- * a, b, c, rhs        -- unchanged
- * x                   -- solution to Ax=b
- * iterMax, tol, omega -- unchanged
- * sor                 -- number of iterations to converge
- */
-
-void sorSolve(const std::vector<double> &a, const std::vector<double> &b, const std::vector<double> &c, const std::vector<double> &rhs,
-              std::vector<double> &x, int iterMax, double tol, double omega, int &sorCount, double rs)
-{
-  // assumes vectors a,b,c,d,rhs and x are same size (doesn't check)
-  int n = a.size() - 1;
-  // sor loop
-  for (sorCount = 0; sorCount < iterMax; sorCount++)
-  {
-    double error = 0.;
-    // implement sor in here
-    {
-      double y = (rhs[0] - c[0] * x[1]) / b[0];
-      x[0] = x[0] + omega * (y - x[0]);
-      x[0] = std::max(x[0], rs);
-    }
-    for (int j = 1; j < n; j++)
-    {
-      double y = (rhs[j] - a[j] * x[j - 1] - c[j] * x[j + 1]) / b[j];
-      x[j] = x[j] + omega * (y - x[j]);
-    }
-    {
-      double y = (rhs[n] - a[n] * x[n - 1]) / b[n];
-      x[n] = x[n] + omega * (y - x[n]);
-    }
-    // calculate residual norm ||r|| as sum of absolute values
-    error += std::fabs(rhs[0] - b[0] * x[0] - c[0] * x[1]);
-    for (int j = 1; j < n; j++)
-      error += std::fabs(rhs[j] - a[j] * x[j - 1] - b[j] * x[j] - c[j] * x[j + 1]);
-    error += std::fabs(rhs[n] - a[n] * x[n - 1] - b[n] * x[n]);
-    // make an exit condition when solution found
-    if (error < tol)
-      break;
-  }
-}
-
 double lagrangeInterpolation(const vector<double> &y, const vector<double> &x, double x0, unsigned int n)
 {
   if (x.size() < n)
@@ -113,44 +62,7 @@ std::vector<double> thomasSolve(const std::vector<double> &a, const std::vector<
   return temp;
 }
 
-void psorSolve(const std::vector<double> &a, const std::vector<double> &b, const std::vector<double> &c, const std::vector<double> &rhs,
-               std::vector<double> &x, int iterMax, double tol, double omega, int &sorCount)
-{
-  double P = 100.;
-  // assumes vectors a,b,c,d,rhs and x are same size (doesn't check)
-  int n = a.size() - 1;
-  // sor loop
-  for (sorCount = 0; sorCount < iterMax; sorCount++)
-  {
-    double error = 0.;
-    // implement sor in here
-    {
-      double y = (rhs[0] - c[0] * x[1]) / b[0];
-      x[0] = x[0] + omega * (y - x[0]);
-      error += std::fabs(rhs[0] - b[0] * x[0] - c[0] * x[1]);
-      x[0] = std::max(P, x[0]);
-    }
-    for (int j = 1; j < n; j++)
-    {
-      double y = (rhs[j] - a[j] * x[j - 1] - c[j] * x[j + 1]) / b[j];
-      x[j] = x[j] + omega * (y - x[j]);
-      error += std::fabs(rhs[j] - a[j] * x[j - 1] - b[j] * x[j] - c[j] * x[j + 1]);
-      x[j] = std::max(P, x[j]);
-    }
-    {
-      double y = (rhs[n] - a[n] * x[n - 1]) / b[n];
-      x[n] = x[n] + omega * (y - x[n]);
-      error += std::fabs(rhs[n] - a[n] * x[n - 1] - b[n] * x[n]);
-      x[n] = std::max(P, x[n]);
-    }
-
-    // make an exit condition when solution found
-    if (error < tol)
-      break;
-  }
-}
-
-/* Template code for the Crank Nicolson Finite Difference
+/* Code for the Crank Nicolson Finite Difference with Penalty
  */
 double crank_nicolson1(double S0, double X, double F, double T, double r, double sigma,
                        double R, double kappa, double mu, double C, double alpha, double beta, int iMax, int jMax, int S_max, double tol, double omega, int iterMax, int &sorCount, double t0)
@@ -256,18 +168,19 @@ double crank_nicolson1(double S0, double X, double F, double T, double r, double
 
   // output the estimated option price
   double optionValue;
-  /*
+
   int jStar = S0 / dS;
   double sum = 0.;
   sum += (S0 - S[jStar]) / (dS)*vNew[jStar + 1];
   sum += (S[jStar + 1] - S0) / dS * vNew[jStar];
   optionValue = sum;
-  */
-  optionValue = lagrangeInterpolation(vNew, S, S0, 4);
+
+  //optionValue = lagrangeInterpolation(vNew, S, S0, 4);
 
   return optionValue;
 }
-
+/* Code for the Crank Nicolson Finite Difference with PSOR
+ */
 double crank_nicolson2(double S0, double X, double F, double T, double r, double sigma,
                        double R, double kappa, double mu, double C, double alpha, double beta, int iMax, int jMax, int S_max, double tol, double omega, int iterMax, int &sorCount, double t0)
 {
@@ -406,21 +319,17 @@ double crank_nicolson2(double S0, double X, double F, double T, double r, double
 int main()
 {
   double T = 2., F = 95., R = 2., r = 0.0229, kappa = 0.125, altSigma = 0.416,
-         mu = 0.0213, X = 47.66, C = 1.09, alpha = 0.02, beta = 0.486, sigma = 3.03, tol = 1.e-8, omega = 1., S_max = 20 * X;
+         mu = 0.0213, X = 47.66, C = 1.09, alpha = 0.02, beta = 0.486, sigma = 3.03, tol = 1.e-8, omega = 1., S_max = 13 * X;
   int iMax = 600;
   int jMax = 600;
   double t0 = 0.57245;
-  //
-  /*
-  double T = 3., F = 56., R = 1., r = 0.0038, kappa = 0.083333333, altSigma = 0.369,
-         mu = 0.0073, X = 56.47, C = 0.106, alpha = 0.01, beta = 0.425, sigma = 3.73, S_max = 10 * X, tol = 1.e-7, omega = 1.;
-  */
+
   int iterMax = 100000;
-  //Create graph of varying S0 and beta and bond
   int length = 300;
   double S_range = 3 * X;
   int sor;
-  /*
+
+  // Produces graph comparing embedded put option and without vs changing S0
   std::ofstream outFile1("./data/no_put_american_varying_s_beta_0_4.csv");
   std::ofstream outFile2("./data/american_varying_s_beta_0_4.csv");
   for (int j = 1; j <= length - 1; j++)
@@ -433,8 +342,8 @@ int main()
   }
   outFile1.close();
   outFile2.close();
-  */
-  /*
+
+  // Produces graph for different values of kappa vs changing S0
   std::ofstream outFile4("./data/american_varying_s_kappa_625.csv");
   std::ofstream outFile5("./data/american_varying_s_kappa_125.csv");
   std::ofstream outFile6("./data/american_varying_s_kappa_187.csv");
@@ -455,19 +364,9 @@ int main()
   outFile4.close();
   outFile5.close();
   outFile6.flush();
-  */
-  double S0 = X;
-  iMax = 1300;
-  jMax = 1300;
-  S_max = jMax * X / 20;
-  auto t1 = std::chrono::high_resolution_clock::now();
-  double result = crank_nicolson1(S0, X, F, T, r, sigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sor, t0);
-  auto t2 = std::chrono::high_resolution_clock::now();
-  auto time_taken =
-      std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1)
-          .count();
-  cout << fixed << result << "," << time_taken << endl;
-  /*
+
+  // Produces tables of price,value,iterations,time and convergence rate for
+  // comparing penalty and psor methods
   std::ofstream outFile7("./data/american_varying_smax_penalty.csv");
   double oldResult = 0, oldDiff = 0;
   double S = X;
@@ -477,9 +376,8 @@ int main()
   {
     iMax = n;
     jMax = n;
-    S_max = n / 20 * X;
+    S_max = int(n / 30) * X;
     int sorCount{0};
-    //t0 = 0;
     auto t1 = std::chrono::high_resolution_clock::now();
     double result = crank_nicolson1(S, X, F, T, r, sigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sorCount, t0);
     double diff = result - oldResult;
@@ -504,9 +402,8 @@ int main()
   {
     iMax = n;
     jMax = n;
-    S_max = n / 20 * X;
+    S_max = int(n / 30) * X;
     int sorCount{0};
-    //t0 = 0;
     auto t1 = std::chrono::high_resolution_clock::now();
     double result = crank_nicolson2(S, X, F, T, r, sigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sorCount, t0);
     double diff = result - oldResult;
@@ -520,5 +417,17 @@ int main()
     oldResult = result;
   }
   outFile8.close();
-  */
+
+  // Produces final, most accurate value in <1s
+  double S0 = X;
+  iMax = 1300;
+  jMax = 1300;
+  S_max = 30 * X;
+  auto t1 = std::chrono::high_resolution_clock::now();
+  double result = crank_nicolson1(S0, X, F, T, r, sigma, R, kappa, mu, C, alpha, beta, iMax, jMax, S_max, tol, omega, iterMax, sor, t0);
+  auto t2 = std::chrono::high_resolution_clock::now();
+  auto time_taken =
+      std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1)
+          .count();
+  cout << fixed << result << "," << time_taken << endl;
 }
